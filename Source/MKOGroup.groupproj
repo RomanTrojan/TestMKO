@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{67A35241-045C-4137-BB3E-D01040C8A6ED}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="MKO.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Modules\FileSearch\FileSearch.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="MKO">
+        <MSBuild Projects="MKO.dproj"/>
+    </Target>
+    <Target Name="MKO:Clean">
+        <MSBuild Projects="MKO.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MKO:Make">
+        <MSBuild Projects="MKO.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FileSearch">
+        <MSBuild Projects="Modules\FileSearch\FileSearch.dproj"/>
+    </Target>
+    <Target Name="FileSearch:Clean">
+        <MSBuild Projects="Modules\FileSearch\FileSearch.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FileSearch:Make">
+        <MSBuild Projects="Modules\FileSearch\FileSearch.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="MKO;FileSearch"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="MKO:Clean;FileSearch:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="MKO:Make;FileSearch:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
