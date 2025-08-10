@@ -9,14 +9,18 @@ uses
   MKO.Modules.Common;
 
 type
+  TFeatureType = (ftFindFile, ftFindByContent);
+
   TFileSearchModule = class(TMKOModule)
   private
-    FFeatures: array of TFeatureInfo;
+    FFeatures: array[TFeatureType] of TFeatureInfo;
+    function FindFiles(Params: PRunParamsInfo): boolean;
+    function FindByContent(Params: PRunParamsInfo): boolean;
 
   protected
     function DoGetFeaturesCount: integer; override;
-    function DoGetFeatureInfo(Index: integer): TFeatureInfo; override;
-    function DoRunFeature(Index: integer): boolean; override;
+    function DoGetFeatureInfo(Index: integer): PFeatureInfo; override;
+    function DoRunFeature(Index: integer; Params: PRunParamsInfo): boolean; override;
 
   public
     constructor Create; override;
@@ -28,52 +32,27 @@ implementation
 
 constructor TFileSearchModule.Create;
 begin
-  FInfo.Description := 'Работа с файлами';
+  FInfo.Caption := 'Файловые операции';
+  FInfo.Description := 'Работа с файловой системой';
 
-  setLength(FFeatures, 2);
-
-  FFeatures[0].Name := 'FindFiles';
-  FFeatures[0].Caption := 'Поиск файлов';
-  FFeatures[0].ResultType := varString;
-  SetLength(FFeatures[0].Params, 2);
-
-  FFeatures[0].Params[0].Requred := true;
-  FFeatures[0].Params[0].Name := 'Path';
-  FFeatures[0].Params[0].Caption := 'Путь';
-  FFeatures[0].Params[0].ParamType := varString;
-  FFeatures[0].Params[0].Default := '';
-
-  FFeatures[0].Params[0].Requred := False;
-  FFeatures[0].Params[1].Name := 'Mask';
-  FFeatures[0].Params[1].Caption := 'Маска файлов';
-  FFeatures[0].Params[1].ParamType := varString;
-  FFeatures[0].Params[1].Default := '*.*';
+  FFeatures[ftFindFile].SetParams('FindFiles', 'Поиск файлов', varString);
+  SetLength(FFeatures[ftFindFile].Params, 2);
+  FFeatures[ftFindFile].Params[0].SetParams(true, 'Path', 'Путь', varString, '');
+  FFeatures[ftFindFile].Params[1].SetParams(false, 'Mask', 'Маска файлов', varString, '*.*');
 
   //////////
 
-  FFeatures[1].Name := 'FindContent';
-  FFeatures[1].Caption := 'Поиск содержимого в файлах';
-  FFeatures[1].ResultType := varString;
-  SetLength(FFeatures[1].Params, 2);
-
-  FFeatures[1].Params[0].Requred := true;
-  FFeatures[1].Params[0].Name := 'Path';
-  FFeatures[1].Params[0].Caption := 'Путь';
-  FFeatures[1].Params[0].ParamType := varString;
-  FFeatures[1].Params[0].Default := '';
-
-  FFeatures[1].Params[0].Requred := true;
-  FFeatures[1].Params[1].Name := 'Fragment';
-  FFeatures[1].Params[1].Caption := 'Фрагмент';
-  FFeatures[1].Params[1].ParamType := varString;
-  FFeatures[1].Params[1].Default := '';
+  FFeatures[ftFindByContent].SetParams('FindContent', 'Поиск содержимого в файлах', varString);
+  SetLength(FFeatures[ftFindByContent].Params, 2);
+  FFeatures[ftFindByContent].Params[0].SetParams(true, 'Path', 'Путь', varString, '');
+  FFeatures[ftFindByContent].Params[1].SetParams(true, 'Fragment', 'Фрагмент', varString, '');
 
   inherited Create;
 end;
 
-function TFileSearchModule.DoGetFeatureInfo(Index: integer): TFeatureInfo;
+function TFileSearchModule.DoGetFeatureInfo(Index: integer): PFeatureInfo;
 begin
-  result := FFeatures[index];
+  result := @FFeatures[TFeatureType(index)];
 end;
 
 function TFileSearchModule.DoGetFeaturesCount: integer;
@@ -81,26 +60,38 @@ begin
   result := Length(FFeatures);
 end;
 
-function TFileSearchModule.DoRunFeature(Index: integer): boolean;
+function TFileSearchModule.DoRunFeature(Index: integer; Params: PRunParamsInfo): boolean;
 var
   i: integer;
   Feature: string;
 begin
-  Feature := FFeatures[Index].Name;
+  case TFeatureType(Index) of
+    ftFindFile:      result := FindFiles(Params);
+    ftFindByContent: result := FindByContent(Params);
+  end;
+end;
 
-  if Assigned(FLogCallback) then
-    FLogCallback(FGUID, Feature, Format('Процесс %s запущен', [Feature]), lkWarning);
-
+function TFileSearchModule.FindByContent(Params: PRunParamsInfo): boolean;
+var
+  i: integer;
+begin
   for I := 1 to 10 do
   begin
     sleep(1000);
-    if Assigned(FLogCallback) then
-      FLogCallback(FGUID, Feature, 'i =' + IntToStr(i), lkInfo);
+    DoLog(FFeatures[ftFindFile].Name, 'i =' + IntToStr(i), lkInfo);
   end;
+  result := true;
+end;
 
-  if Assigned(FLogCallback) then
-    FLogCallback(FGUID, Feature, Format('Процесс %s завершен', [Feature]), lkWarning);
-
+function TFileSearchModule.FindFiles(Params: PRunParamsInfo): boolean;
+var
+  i: integer;
+begin
+  for I := 1 to 10 do
+  begin
+    sleep(1000);
+    DoLog(FFeatures[ftFindFile].Name, 'i =' + IntToStr(i), lkInfo);
+  end;
   result := true;
 end;
 

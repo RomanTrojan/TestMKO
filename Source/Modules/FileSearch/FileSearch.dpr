@@ -31,7 +31,12 @@ end;
 
 function RunFeature(const Feature: string; Params: TRunParamsInfo): boolean; stdcall;
 begin
-  result := TMKOModule.GetInstance.RunFeature(Feature, Params);
+  result := TMKOModule.GetInstance.RunFeature(Feature, @Params);
+end;
+
+procedure FreeResources;
+begin
+  TMKOModule.FreeResources;
 end;
 
 exports
@@ -39,7 +44,8 @@ exports
   GetFeatureInfo,
   RegisterLogCallback,
   UnregisterLogCallback,
-  RunFeature;
+  RunFeature,
+  FreeResources;
 
 begin
 
