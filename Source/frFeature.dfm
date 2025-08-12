@@ -4,46 +4,36 @@ object frFeatureProperty: TfrFeatureProperty
   Width = 686
   Height = 370
   TabOrder = 0
-  object mLog: TMemo
-    Left = 0
-    Top = 159
-    Width = 686
-    Height = 211
-    Align = alClient
-    ReadOnly = True
-    ScrollBars = ssBoth
-    TabOrder = 0
-  end
   object pTop: TPanel
     Left = 0
     Top = 38
     Width = 686
-    Height = 121
+    Height = 139
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 1
+    TabOrder = 0
     object pInfo: TPanel
       Left = 0
       Top = 0
       Width = 289
-      Height = 121
+      Height = 139
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitHeight = 121
       object lCurrentOperation: TLabel
         AlignWithMargins = True
         Left = 3
         Top = 22
         Width = 283
-        Height = 15
+        Height = 13
         Margins.Top = 0
         Align = alTop
-        Caption = #1054#1073#1088#1072#1073#1086#1090#1082#1072
-        ExplicitWidth = 60
+        ExplicitWidth = 3
       end
       object bvlSeparator: TBevel
         Left = 0
-        Top = 40
+        Top = 38
         Width = 289
         Height = 3
         Align = alTop
@@ -57,19 +47,18 @@ object frFeatureProperty: TfrFeatureProperty
         Width = 283
         Height = 16
         Align = alTop
+        Step = 1
         TabOrder = 0
       end
       object pStartedAt: TPanel
         AlignWithMargins = True
         Left = 3
-        Top = 46
+        Top = 44
         Width = 283
         Height = 21
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitLeft = 1
-        ExplicitTop = 43
         object lStartedAtHint: TLabel
           Left = 0
           Top = 0
@@ -86,19 +75,19 @@ object frFeatureProperty: TfrFeatureProperty
           Height = 21
           Align = alClient
           Caption = '12:01:25'
-          ExplicitWidth = 160
+          ExplicitWidth = 44
+          ExplicitHeight = 13
         end
       end
       object pElapsedTime: TPanel
         AlignWithMargins = True
         Left = 3
-        Top = 73
+        Top = 71
         Width = 283
         Height = 21
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitTop = 46
         object lElapsedTimeHint: TLabel
           Left = 0
           Top = 0
@@ -106,7 +95,7 @@ object frFeatureProperty: TfrFeatureProperty
           Height = 21
           Align = alLeft
           AutoSize = False
-          Caption = #1042#1099#1087#1086#1083#1085#1103#1077#1090#1089#1103
+          Caption = #1055#1088#1086#1096#1083#1086':'
         end
         object lElapsedTime: TLabel
           Left = 81
@@ -115,8 +104,8 @@ object frFeatureProperty: TfrFeatureProperty
           Height = 21
           Align = alClient
           Caption = '00:01:20'
-          ExplicitWidth = 42
-          ExplicitHeight = 15
+          ExplicitWidth = 44
+          ExplicitHeight = 13
         end
       end
     end
@@ -124,19 +113,21 @@ object frFeatureProperty: TfrFeatureProperty
       Left = 289
       Top = 0
       Width = 397
-      Height = 121
+      Height = 139
       Align = alClient
       TabOrder = 1
-      object le1: TValueListEditor
+      ExplicitHeight = 121
+      object leRunParams: TValueListEditor
         Left = 1
         Top = 1
         Width = 395
-        Height = 89
+        Height = 107
         Align = alClient
         TabOrder = 0
         TitleCaptions.Strings = (
           #1055#1072#1088#1072#1084#1077#1090#1088
           #1047#1085#1072#1095#1077#1085#1080#1077)
+        ExplicitHeight = 89
         ColWidths = (
           99
           290)
@@ -144,13 +135,14 @@ object frFeatureProperty: TfrFeatureProperty
       object btTastAction: TButton
         AlignWithMargins = True
         Left = 4
-        Top = 93
+        Top = 111
         Width = 389
         Height = 24
         Action = acRun
         Align = alBottom
         Images = ilImages
         TabOrder = 1
+        ExplicitTop = 93
       end
     end
   end
@@ -161,7 +153,7 @@ object frFeatureProperty: TfrFeatureProperty
     Height = 38
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 2
+    TabOrder = 1
     object lTaskCaption: TLabel
       AlignWithMargins = True
       Left = 33
@@ -196,6 +188,66 @@ object frFeatureProperty: TfrFeatureProperty
       ExplicitLeft = 484
       ExplicitTop = 3
       ExplicitHeight = 32
+    end
+  end
+  object pgcResult: TPageControl
+    Left = 0
+    Top = 177
+    Width = 686
+    Height = 193
+    ActivePage = tsResult
+    Align = alClient
+    TabOrder = 2
+    ExplicitTop = 159
+    ExplicitHeight = 211
+    object tsResult: TTabSheet
+      Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090
+      ExplicitHeight = 183
+      object mResult: TMemo
+        Left = 0
+        Top = 0
+        Width = 678
+        Height = 165
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 0
+        ExplicitHeight = 183
+      end
+    end
+    object tsLog: TTabSheet
+      Caption = #1046#1091#1088#1085#1072#1083
+      ImageIndex = 1
+      ExplicitHeight = 183
+      object mLog: TMemo
+        Left = 0
+        Top = 17
+        Width = 678
+        Height = 148
+        Align = alClient
+        ReadOnly = True
+        ScrollBars = ssBoth
+        TabOrder = 0
+        ExplicitHeight = 166
+      end
+      object p1: TPanel
+        Left = 0
+        Top = 0
+        Width = 678
+        Height = 17
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 1
+        object bt1: TButton
+          Left = 0
+          Top = 0
+          Width = 75
+          Height = 17
+          Align = alLeft
+          Caption = #1054#1095#1080#1089#1090#1080#1090#1100
+          TabOrder = 0
+          OnClick = bt1Click
+        end
+      end
     end
   end
   object ilImages: TImageList
@@ -343,13 +395,18 @@ object frFeatureProperty: TfrFeatureProperty
   end
   object alFeature: TActionList
     Images = ilImages
-    Left = 328
-    Top = 168
+    Left = 544
+    Top = 160
     object acRun: TAction
       Caption = #1047#1072#1087#1091#1089#1090#1080#1090#1100
       ImageIndex = 0
       OnExecute = acRunExecute
       OnUpdate = acRunUpdate
     end
+  end
+  object tm1sec: TTimer
+    OnTimer = tm1secTimer
+    Left = 328
+    Top = 168
   end
 end

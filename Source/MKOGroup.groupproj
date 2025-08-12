@@ -9,6 +9,9 @@
         <Projects Include="Modules\FileSearch\FileSearch.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Modules\Shell\Shell.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="FileSearch:Make">
         <MSBuild Projects="Modules\FileSearch\FileSearch.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Shell">
+        <MSBuild Projects="Modules\Shell\Shell.dproj"/>
+    </Target>
+    <Target Name="Shell:Clean">
+        <MSBuild Projects="Modules\Shell\Shell.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Shell:Make">
+        <MSBuild Projects="Modules\Shell\Shell.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="MKO;FileSearch"/>
+        <CallTarget Targets="MKO;FileSearch;Shell"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="MKO:Clean;FileSearch:Clean"/>
+        <CallTarget Targets="MKO:Clean;FileSearch:Clean;Shell:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="MKO:Make;FileSearch:Make"/>
+        <CallTarget Targets="MKO:Make;FileSearch:Make;Shell:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
